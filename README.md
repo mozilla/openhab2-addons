@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mozilla/openhab2-addons.svg?branch=master)](https://travis-ci.org/mozilla/openhab2-addons)
+
 ## openHAB 2 Add-ons
 
 This repository contains add-ons that are implemenented using the new [Eclipse SmartHome APIs](https://www.eclipse.org/smarthome/documentation/development/bindings/how-to.html) of openHAB 2.
