@@ -1,9 +1,9 @@
 
 {
     "package": {
-        "name": "OpenHab", 
+        "name": "vaani.iot", 
         "repo": "openhab2-addons",
-        "subject": "mozilla/openhab2-addons", 
+        "subject": "vaani/vaani.iot", 
         "desc": "Vaani OpenHab submodule",
         "website_url": "www.vaani.iot",
         "issue_tracker_url": "https://github.com/bintray/bintray-client-java/issues",
