@@ -2,22 +2,21 @@
 {
     "package": {
         "name": "OpenHab", 
-        "repo": "OpenHab",
-        "subject": "yglazko/OpenHab", 
+        "repo": "openhab2-addons",
+        "subject": "mozilla/openhab2-addons", 
         "desc": "Vaani OpenHab submodule",
         "website_url": "www.vaani.iot",
         "issue_tracker_url": "https://github.com/bintray/bintray-client-java/issues",
         "vcs_url": "https://github.com/bintray/bintray-client-java.git",
         "github_use_tag_release_notes": true,
         "github_release_notes_file": "README.md",
-        "licenses": ["IDK"],
-        "labels": ["cool", "awesome", "gorilla"],
+        "labels": ["vaani", "openhab", "mozilla"],
         "public_download_numbers": false,
         "public_stats": false,
         }
 
     "version": {
-        "name": "0.5"
+        "name": "0.1"
     },
 
     "files":
