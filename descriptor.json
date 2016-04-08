@@ -11,7 +11,7 @@
         "github_release_notes_file": "README.md",
         "labels": ["vaani", "openhab", "mozilla"],
         "public_download_numbers": false,
-        "public_stats": false,
+        "public_stats": false
         },
 
     "version": {
