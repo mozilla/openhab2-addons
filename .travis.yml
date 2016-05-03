@@ -1,0 +1,37 @@
+install:
+- wget http://www-us.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
+- tar xzf apache-maven-3.3.9-bin.tar.gz
+- curl -s -L https://github.com/mozilla/openhab/releases/latest | egrep -o /mozilla/openhab/releases/download/.*/m2repository.tar.gz | wget --base=http://github.com/ -i -
+- tar xf m2repository.tar.gz -C $HOME/.m2/repository/
+
+before_script:
+- rm $HOME/.m2/settings.xml
+- export MAVEN_OPTS="-Dmaven.artifact.threads=3 -Xmx2469m -XX:MaxPermSize=512m"
+
+script:
+- MAVEN_SKIP_RC=true apache-maven-3.3.9/bin/mvn install -fae -B 2>&1 | ./filter.py ; test ${PIPESTATUS[0]} -eq 0
+
+sudo: required
+
+dist: trusty
+
+cache:
+  directories:
+  - $HOME/.m2
+
+jdk:
+- openjdk8
+
+before_deploy:
+- tar zcfv $TRAVIS_BUILD_DIR/m2repository.tar.gz -C $HOME/.m2/repository . 2>&1 | $TRAVIS_BUILD_DIR/filter.py
+
+deploy:
+  provider: releases
+  api_key:
+    secure: XI0TiTEu7JdFgubFAOLy5tROoCPuK08IA1RU6i1lYMbD061uQANkTkVDsp/N7jILlCwsK7mxAfATrbRZchF2c2N9unuNk0ywLe0riEAbKOb1f/s7siefWyF73/H8ut6H+YzaBfq8OmRfimBm/9G0FqBW8QZE13yYs/IuQW2wTPqB8Kucyqo/Y8jTzmih/8bOu8zPStroKqCh4ZDiNRGx9H9nGxvkxy5USHtq9pDBE51JIVxiJfO4ceHgjJmtj96zWfwRBUb1C5WdngT2SE6y6RZH62An6abrEGDHaIe6jciSacrjbM8jlU1rGuEOzdnY0byefzyIvVF1cLUhXqv+kMZMynanttGAxgoLSKRWzIFLkw4NNjEqeO1Y05ZmmYM6djdSub0zG5xicL/VGV3a/BNm/4+8eisPjxxZtxrZZlr7l3NZrI7q1c7TKs298Y0fQP4tIIjmlgNez7HxW01LaILhXntMbiYbabG6f44GL/kNdzq3CJY+5njoNo1ky1KcPhP4H1VuPDp0bTIEH+wXEBZ6IzmEs9Ac/X2WbSRNdASR3Yx1Gwye1SRlxJgutCW6h4RfTv9IhosipWa/DW7HYseCnBBxYGkltTA1lPFZnJdD56+JfHCjHkWdKsvi1bBXOvalkd5twnaScRUpjRQxrSK+PohUU+5yuMo7Th90jFE=
+  file: m2repository.tar.gz
+  skip_cleanup: true
+  on:
+    repo: mozilla/openhab2-addons
+    branch: vaani
+    tags: true
