@@ -1,3 +1,8 @@
+language: java
+jdk: openjdk8
+sudo: required
+dist: trusty
+
 install:
 - wget http://www-us.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
 - tar xzf apache-maven-3.3.9-bin.tar.gz
@@ -12,16 +17,9 @@ before_script:
 script:
 - MAVEN_SKIP_RC=true apache-maven-3.3.9/bin/mvn install -fae -B $PROJECTS 2>&1 | ./filter.py ; test ${PIPESTATUS[0]} -eq 0
 
-sudo: required
-
-dist: trusty
-
 cache:
   directories:
   - $HOME/.m2
-
-jdk:
-- openjdk8
 
 before_deploy:
 - tar zcfv $TRAVIS_BUILD_DIR/m2repository.tar.gz -C $HOME/.m2/repository . 2>&1 | $TRAVIS_BUILD_DIR/filter.py
@@ -29,10 +27,10 @@ before_deploy:
 deploy:
   provider: releases
   api_key:
-    secure: XI0TiTEu7JdFgubFAOLy5tROoCPuK08IA1RU6i1lYMbD061uQANkTkVDsp/N7jILlCwsK7mxAfATrbRZchF2c2N9unuNk0ywLe0riEAbKOb1f/s7siefWyF73/H8ut6H+YzaBfq8OmRfimBm/9G0FqBW8QZE13yYs/IuQW2wTPqB8Kucyqo/Y8jTzmih/8bOu8zPStroKqCh4ZDiNRGx9H9nGxvkxy5USHtq9pDBE51JIVxiJfO4ceHgjJmtj96zWfwRBUb1C5WdngT2SE6y6RZH62An6abrEGDHaIe6jciSacrjbM8jlU1rGuEOzdnY0byefzyIvVF1cLUhXqv+kMZMynanttGAxgoLSKRWzIFLkw4NNjEqeO1Y05ZmmYM6djdSub0zG5xicL/VGV3a/BNm/4+8eisPjxxZtxrZZlr7l3NZrI7q1c7TKs298Y0fQP4tIIjmlgNez7HxW01LaILhXntMbiYbabG6f44GL/kNdzq3CJY+5njoNo1ky1KcPhP4H1VuPDp0bTIEH+wXEBZ6IzmEs9Ac/X2WbSRNdASR3Yx1Gwye1SRlxJgutCW6h4RfTv9IhosipWa/DW7HYseCnBBxYGkltTA1lPFZnJdD56+JfHCjHkWdKsvi1bBXOvalkd5twnaScRUpjRQxrSK+PohUU+5yuMo7Th90jFE=
+    secure: Wo58kfq90v933u6Hm2S/ruPfeQHT2hTheb+FFxvesdycZKDSQzVFfTqTJIW3261/Fy/zMGVzbuSA1DDjPkgz5qYh5Aop1XZHz8B3XVOXZ6VEGOeOHDHVmmwOrUgokNPubAM9ylbfup5l1OM6r4EOzEcUkclE+hLQ7K6yJ0jzFeVybAGw19f4SStNek40NWB4U854LO6lhXgIkQ2INdDS6us1ELw0lIHexliJpvqXP47ycOUJhtvG9O30Gf5D+8nxk1hqvTPt0MaGvUMRLlWeNL9kqGGaNYp4RbZfFJIW6yffM9lVBV5YLxCBUZKb393Qb9X2zRTG94lobk6yRrPTww/4+t0LDHlBHqM8fb4kOCWmwAEnGPNMDmbrLIBBEkba2XlAbOTIZExrD49l4BnEYLWcXQCweIgpmHvKO+caIQfIMUJHA1BEWKAO0iUsx5ee0ulUghHrrkD38ckzMv3GGTjhppylrRxT4lFyBkaPmsQFs/J2RRB+nb7DID2+Vm9OJthZ7oeAXlmcK2MaFGYO7Qa/kKJkbFdgcX49AzE2wpksNt94LfPpOLoqrF5uQZa0JYt7mmxIMBaiUHVTclQ/lLaAX1S37mvs40G70QPi78dLwSopOdOFl3+2bfRao7SL+SU7QOWkWFeUFthL7QBtwhTu6tf8y9jTg7Z++7D5z3U=
   file: m2repository.tar.gz
   skip_cleanup: true
   on:
     repo: mozilla/openhab2-addons
-    branch: vaani
+    branch: master
     tags: true
