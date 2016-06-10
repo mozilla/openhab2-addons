@@ -3,6 +3,17 @@ jdk: openjdk8
 sudo: required
 dist: trusty
 
+env:
+- secure: EIb6jUrl1mei2nhnMAoD/d7RhDyAtK1YSV3PupTpVXOxXgfUDpRZgtzS0Ewad12PlaBPiNi8jY4bN2XkgOmCWLmMsvaXKrfMsFp+pm7RpVp+u95BjF2yUMAFOdh3nv/qAZ9HG2o4gHpFS52y0iHtgVYm5jJLYj3K3ercdbb1wXd0O0DnyPgowuO1zYGikiym/91KnbJDXff3c+dKhLJrDKDXT4LYbiy0Xopt7lmmpVX2CooRMxM2G/K1YsnsLc0qGSVE/Y9CkKOlNvfkgPuZvv0U7yNCy1Km+JhOb9rmN+WrAM7RcPP2VtjNQRraxqW6tYc6OCP53l43R5F0xNzeuRwQnZ8IKaooNkipE0ALx4sWkqwk28+NwP14dVRJcP56DvXSCMYOyenjojSDtBrrnaIHmmb0danz+GCDCyw1/TaKTCm9A9SieHLS2e+eW6R7cAPvwG7cUod/SnUkvX3C1PdhztaBsyeUB+L+zF0fjPsqTLM3rDr/OgbqgKGyrtEgGrERRLwTmkQbSc/V+agRVrPiAA4g5fOULtJye2oPPAs+2m9ZB4f3/cxBG9wMNOhQ2TiNVwzMa7+G0d6Wgmjgq7ZVaXawMS7tQr+Cn4L2yiwZCprFV9y488kT81bhqfLBIdMwU18d/PHO8sFg39fAdzdlSbD2sfp/6DoDcLDVIZs=
+
+notifications:
+  irc:
+  - "irc.mozilla.org#vaani"
+
+after_deploy:
+- |-
+  curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Travis-API-Version: 3" -H "Authorization: token $TRAVIS_TOKEN" -d '{ "request": { "branch": "master" } }' https://api.travis-ci.org/repo/mozilla%2Fopenhab-distro/requests
+
 install:
 - wget http://www-us.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
 - tar xzf apache-maven-3.3.9-bin.tar.gz
@@ -29,4 +40,3 @@ deploy:
   on:
     repo: mozilla/openhab2-addons
     branch: master
-    tags: true
